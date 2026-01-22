@@ -1,0 +1,17 @@
+# Task-2 Evidence
+## LED Functionality
+
+- The LED turns ON when the UART message prints **LED HIGH**
+- The LED turns OFF when the UART message prints **LED LOW**
+- LED toggling is synchronized with UART output
+
+## Video Demonstration
+
+## Evidence Files
+
+The video demonstration and screenshot showing UART output and LED toggling have been uploaded directly to this GitHub repository for verification.
+
+
+## Conclusion
+
+This evidence confirms that UART communication is working correctly and the LED toggles as expected for Task-2.
