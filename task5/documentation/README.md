@@ -14,19 +14,8 @@ The MCU samples the button state at fixed intervals (1 ms) and streams the data 
 - UART (serial data output)
 
 ## Folder Structure
-task4/
-└── submission/
-├── lib/
-│ ├── gpio.c / gpio.h
-│ ├── uart.c / uart.h
-│ └── timer.c / timer.h
-├── app/
-│ └── main.c
-├── README.md
-├── evidence/
-│ ├── evidence.md
-│ ├── task4_evidence_video.mp4
-│ └── task4_monitor_output.png
+<img width="422" height="444" alt="image" src="https://github.com/user-attachments/assets/908018c6-c22c-499f-a453-e545b748051c" />
+
 
 
 ## Quick Start
@@ -34,4 +23,5 @@ task4/
 2. Build: `Ctrl+Alt+B`
 3. Upload: `Ctrl+Alt+U`
 4. Open Serial Monitor at 9600 baud
-5. Press/release the button to observe monitor output
+5. Connect PD1 wire to ground to get 0(low) as input and Leave PD1 jumper free to get 1(high) as input 
+6. Press the button to observe monitor output
