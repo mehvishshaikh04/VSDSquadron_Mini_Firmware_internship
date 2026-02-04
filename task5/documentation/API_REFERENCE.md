@@ -82,6 +82,7 @@ Parameters: None
 Return Value: None
 Example:
 Timer_Stop();
+
 void Timer_SetCallback(void (*callback)(void))
 Purpose: Register a callback function to be called on each timer interrupt.
 Parameters: callback – Pointer to function with void return and no parameters
