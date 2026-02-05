@@ -2,15 +2,14 @@
 
 This document provides a complete reference for all drivers used in the UART Software Oscilloscope project.
 
----
 
 ## GPIO Driver
 ```c
-`void GPIO_Init(void)`
--Purpose:Initialize PA0 as digital input with internal pull-up.  
--Parameters: None  
--Return Value:None  
-- Example:
+void GPIO_Init(void)
+Purpose:Initialize PA0 as digital input with internal pull-up.  
+Parameters: None
+Return Value:None
+ 
 uint8_t GPIO_ReadButton(void)
 Purpose: Read the current state of the push-button.
 Parameters: None
