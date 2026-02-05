@@ -13,75 +13,84 @@ The architecture is designed to be simple, modular, and reusable.
 ### 1. Driver Layer
 Located in the `lib/` directory.
 
-The driver layer is responsible for all direct hardware interactions.
+The driver layer is responsible for all direct hardware interaction.
 
 - **GPIO Driver**
-  - Configures the GPIO pin connected to the push button
-  - Reads the digital state of the button (pressed or released)
+  - Configures Port D pins
+  - Reads push button state
+  - Reads sampled signal input
 
 - **Timer Driver**
-  - Configures a hardware timer
-  - Generates periodic interrupts used to control sampling timing
+  - Configures Timer2
+  - Generates periodic interrupts
+  - Sets a software flag for sampling control
 
 - **UART Driver**
-  - Initializes UART peripheral
-  - Transmits text data to a PC serial terminal
+  - Configures USART1
+  - Transmits characters and strings over serial interface
 
-Each driver exposes a clean API and hides hardware register details from the application.
+All hardware registers are accessed only inside drivers.
+
 
 ### 2. Application Layer
 Located in `app/main.c`.
 
 The application layer:
-- Controls program flow
-- Coordinates driver usage
-- Processes sampled data
-- Formats output for UART transmission
+- Initializes all drivers
+- Implements start/stop sampling control using a push button
+- Responds to timer events
+- Reads GPIO input values
+- Sends sampled values to UART
 
-The application does **not** directly access hardware registers and interacts only through driver APIs.
+The application interacts with hardware **only through driver APIs** and does not directly manipulate peripheral registers.
 
 
-## Control Flow (Timing Behavior)
+## Control Flow
 
-1. The timer is configured to generate periodic interrupts.
-2. Each timer interrupt sets a software flag indicating that a new sample is required.
-3. The main loop continuously checks this flag.
-4. When the flag is detected:
-   - The flag is cleared
-   - The GPIO button state is read
-   - The sampled value is prepared for transmission
-   - The value is sent over UART
-This design ensures predictable and deterministic sampling behavior.
+1. System initializes GPIO, UART, and Timer drivers.
+2. The application waits in the main loop.
+3. A button press toggles the sampling state.
+4. When sampling is enabled:
+   - Timer interrupt sets `timer_flag`
+   - Main loop detects the flag
+   - GPIO signal pin is sampled
+   - Sampled value is transmitted over UART
+5. When sampling is disabled, no data is transmitted.
+
 
 ## Data Flow
-<img width="364" height="305" alt="image" src="https://github.com/user-attachments/assets/72689fc6-e6fa-47ff-8de3-d4c2dd1049d6" />
+<img width="381" height="369" alt="image" src="https://github.com/user-attachments/assets/e92b5114-d1dc-4b22-a28e-274202fa4229" />
+
 
 Each sampled GPIO value is transmitted as a human-readable text value on a new line.
 
 
+## Timing Behavior
+
+- Sampling is controlled by Timer2
+- Timer generates periodic interrupts based on configured interval
+- Sampling timing is independent of UART transmission speed
+- The timer interrupt only sets a flag; all processing occurs in the main loop
+
+
 ## Design Rationale
 
-- **Separation of Concerns**
-  - Hardware access is isolated in drivers
+- **Modularity**
+  - Drivers isolate hardware-specific logic
   - Application logic remains clean and readable
 
 - **Deterministic Sampling**
-  - Timer-controlled sampling ensures consistent behavior
+  - Timer-based triggering ensures consistent sampling intervals
 
 - **Simplicity**
-  - Line-based UART output is easy to verify and debug
-  - Suitable for learning and demonstration purposes
+  - Line-based UART output simplifies debugging and verification
 
 - **Reusability**
-  - Drivers can be reused in future projects
-  - Application logic can be extended without modifying drivers
+  - Drivers can be reused in future embedded applications
 
 
 ## Architectural Benefits
 
-- Easy to understand for new engineers
-- Matches industry-standard embedded firmware structure
+- Easy to understand and maintain
+- Matches industry-standard embedded firmware practices
 - Documentation accurately reflects implemented behavior
-- Fully compliant with Task-5 documentation requirements
-
-
