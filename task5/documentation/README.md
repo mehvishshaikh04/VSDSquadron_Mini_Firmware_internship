@@ -1,27 +1,19 @@
-# UART Software Oscilloscope
+# UART-Based GPIO Sampling Application
 
-## Summary
-This project implements a software-based oscilloscope using a push-button as the digital input. 
-The MCU samples the button state at fixed intervals (1 ms) and streams the data over UART to a PC terminal in CSV format for waveform visualization.
+## Overview
+This project implements a UART-based GPIO sampling application on the VSDSquadron Mini board. A push button is used to start and stop periodic sampling of a digital GPIO input, and sampled values are transmitted over UART as line-based serial output.
 
-## Target Hardware
-- VSDSquadron Mini Board
-- Push-button connected to GPIO PA0
+## Hardware
+- VSDSquadron Mini board
+- PD0: Push button (start/stop)
+- PD1: Digital signal input
 
 ## Supported Drivers
-- GPIO (digital input)
-- Timer (periodic interrupts for sampling)
-- UART (serial data output)
-
-## Folder Structure
-<img width="422" height="444" alt="image" src="https://github.com/user-attachments/assets/908018c6-c22c-499f-a453-e545b748051c" />
-
-
+- GPIO
+- UART
+- Timer
 
 ## Quick Start
-1. Open PlatformIO in VSCode
-2. Build: `Ctrl+Alt+B`
-3. Upload: `Ctrl+Alt+U`
-4. Open Serial Monitor at 9600 baud
-5. Connect PD1 wire to ground to get 0(low) as input and Leave PD1 jumper free to get 1(high) as input 
-6. Press the button to observe monitor output
+1. Build and flash the firmware.
+2. Open a UART terminal at 9600 baud.
+3. Press the button to start or stop sampling.
