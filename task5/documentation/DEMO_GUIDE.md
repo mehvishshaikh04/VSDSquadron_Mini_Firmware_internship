@@ -1,9 +1,9 @@
 # Demo Guide
 
 ## Objective
-This guide explains how to run, test, and verify the UART Software Oscilloscope application on the VSDSquadron Mini board.
+This document describes how to run, test, and verify the UART-based GPIO sampling application on the VSDSquadron Mini board.
 
-The demo demonstrates start/stop controlled GPIO sampling with line-based UART output.
+The demo demonstrates button-controlled start/stop sampling of a digital GPIO input, with sampled values transmitted over UART as line-based serial output.
 
 
 ## Hardware Setup
@@ -12,27 +12,31 @@ The demo demonstrates start/stop controlled GPIO sampling with line-based UART o
 - VSDSquadron Mini board
 - Push button
 - Jumper wires
+- USB cable for UART connection
 
-### Connections
+### Pin Connections
 - **PD0** → Push button (START / STOP control)
-- **PD1** → Signal input (can be connected to a button or logic source)
+- **PD1** → Digital signal input
 - Push button other terminal → GND
-- UART connected to PC via USB
+- UART → PC via USB
 
-Internal pull-up resistors are enabled in software.
+Internal pull-up resistors for GPIO inputs are enabled in software.
 
 
 ## Flashing the Firmware
 
-1. Open the project in **VS Code with PlatformIO**
-2. Build the project:  Ctrl + Alt + B
-3. Upload the firmware:  Ctrl + Alt + U
-4. Ensure flashing completes successfully
+1. Open the project in VS Code using PlatformIO
+2. Build the project  
+   `Ctrl + Alt + B`
+3. Upload the firmware to the board  
+   `Ctrl + Alt + U`
+4. Confirm that flashing completes successfully without errors
+
 
 
 ## UART Configuration
 
-Open a serial monitor with the following settings:
+Open a serial terminal with the following settings:
 
 - **Baud Rate:** 9600
 - **Data Bits:** 8
@@ -41,59 +45,92 @@ Open a serial monitor with the following settings:
 - **Flow Control:** None
 
 
+
 ## Running the Demo
 
-1. Reset or power the board
+1. Power on or reset the board
 2. Open the UART serial monitor
 3. Observe the startup messages:
-   
-   <img width="360" height="80" alt="image" src="https://github.com/user-attachments/assets/23160736-130b-4f3f-a81d-0d2e575df4d2" />
+```
+Smart Oscilloscope Ready
+Press button to START / STOP
+```
 
-4. Press the push button connected to PD0
+4. Press the push button connected to **PD0**
 5. Observe the message:
+```
+Sampling STARTED
+```
 
-   <img width="338" height="47" alt="image" src="https://github.com/user-attachments/assets/31636fc4-e80f-4542-90f0-dbcb972e1171" />
+6. GPIO input values from **PD1** will now be printed periodically as `0` or `1`
+7. Press the push button again to stop sampling
+8. Observe the message
 
-6. GPIO signal values (`0` or `1`) will now be printed periodically
-7. Press the button again to stop sampling
-8. Observe:
 
-  <img width="238" height="39" alt="image" src="https://github.com/user-attachments/assets/82fdfdc1-71d8-4e36-8870-99524c2aa035" />
 
 ## Expected Output
 
-Example UART output:
+Example UART output during operation:
+```
+Sampling STARTED
+1
+1
+0
+1
+Sampling STOPPED
+```
 
-<img width="345" height="293" alt="image" src="https://github.com/user-attachments/assets/853174ac-71cb-4951-943d-ca0691402d07" />
 
-### Output Meaning
-- `1` → GPIO input is HIGH
-- `0` → GPIO input is LOW
-- Each line corresponds to one sampled value
+
+## Output Interpretation
+
+- `1` → GPIO input (PD1) is HIGH
+- `0` → GPIO input (PD1) is LOW
+- Each line represents one sampled GPIO value
+- Output is generated only while sampling is enabled
+
 
 
 ## Verification Checklist
 
-- UART messages appear correctly
+- UART startup messages appear correctly
 - Button press toggles sampling state
 - Data is printed only when sampling is active
 - Sampling stops immediately when disabled
-- Output values match the signal input state
+- Output values correctly reflect the signal applied to PD1
+
 
 
 ## Troubleshooting
 
-- **No UART output:** Check baud rate and COM port
-- **Sampling not starting:** Verify PD0 wiring and button connection
-- **Incorrect values:** Verify signal input wiring on PD1
+- **No UART output:**  
+  Verify the baud rate and correct COM port selection
+
+- **Sampling does not start:**  
+  Check push button wiring and PD0 connection
+
+- **Incorrect GPIO values:**  
+  Verify signal wiring on PD1
+
 
 
 ## Demo Completion Criteria
 
 The demo is considered successful when:
-- Sampling can be started and stopped using the button
+
+- Sampling can be started and stopped using the push button
 - GPIO values are streamed correctly over UART
-- Output matches expected behavior
+- Output behavior matches the expected functionality
+
+
+
+
+   
+
+
+
+
+
 
 
   
