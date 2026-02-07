@@ -4,7 +4,7 @@
 ## GPIO Driver
 
 ### void gpio_init_pd(uint8_t pin, gpio_mode_t mode)
-- Configures a GPIOD pin as input or output.
+Configures a GPIOD pin as input or output.
 
 Parameters:
 - pin – GPIOD pin number
@@ -29,23 +29,23 @@ Return Value:
 ## UART Driver
 
 ### void uart_init(uint32_t baud)
-- Initializes USART1 with the specified baud rate.
+Initializes USART1 with the specified baud rate.
  
 ### void uart_send_char(char c)
-- Transmits a single character over UART.
+Transmits a single character over UART.
 
 ### void uart_send_string(const char *str)
-- Transmits a null-terminated string over UART.
+Transmits a null-terminated string over UART.
   
 
 
 ## Timer Driver  
 
 ### void timer_init(uint16_t period_ms)
-- Configures Timer2 to generate periodic interrupts.
+Configures Timer2 to generate periodic interrupts.
   
 ### extern volatile uint8_t timer_flag
-- Flag set by Timer2 interrupt to indicate a sampling event.
+Flag set by Timer2 interrupt to indicate a sampling event.
 
 
 
