@@ -4,7 +4,7 @@
 ## GPIO Driver
 
 ### void gpio_init_pd(uint8_t pin, gpio_mode_t mode)
-Configures a GPIOD pin as input or output.
+- Configures a GPIOD pin as input or output.
 
 Parameters:
 - pin – GPIOD pin number
